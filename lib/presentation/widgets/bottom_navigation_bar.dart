@@ -86,7 +86,6 @@ class _CustomAdaptiveBottomNavState extends State<CustomAdaptiveBottomNav> {
             ),
             tabBuilder: (context, index) {
               return Material(
-                // type: MaterialType.transparency,
                 color: Colors.white,
                 child: widget.tabBuilder!(context, index),
               );
