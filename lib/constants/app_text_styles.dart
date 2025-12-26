@@ -9,6 +9,12 @@ class AppTextStyles {
     color: AppColors.black,
   );
 
+  static TextStyle body2 = TextStyle(
+    fontSize: Dimens.sixteen,
+    fontWeight: FontWeight.w500,
+    color: AppColors.black,
+  );
+
   static TextStyle bodyBold = TextStyle(
     fontSize: Dimens.twenty,
     fontWeight: FontWeight.w600,

@@ -4,3 +4,5 @@ part of 'home_page_bloc.dart';
 sealed class HomePageState {}
 
 final class HomePageInitial extends HomePageState {}
+
+final class UserAddedState extends HomePageState {}

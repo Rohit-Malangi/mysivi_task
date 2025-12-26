@@ -1,7 +1,7 @@
 import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
-import 'package:mysivi_task/presentation/pages/chat_page.dart';
+import 'package:mysivi_task/presentation/pages/chat_page/chat_page.dart';
 import 'package:mysivi_task/presentation/pages/offers_page.dart';
 import 'package:mysivi_task/presentation/pages/settings_page.dart';
 import 'package:mysivi_task/presentation/widgets/bottom_navigation_bar.dart';
