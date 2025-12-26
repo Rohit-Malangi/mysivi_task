@@ -15,8 +15,8 @@ class GenerateRandom {
     return _random.nextBool();
   }
 
-  static int randomIntTillTen() {
-    return _random.nextInt(10) + 1;
+  static int randomIntTillN(int n) {
+    return _random.nextInt(n) + 1;
   }
 
   static DateTime generateRandomPastTime() {

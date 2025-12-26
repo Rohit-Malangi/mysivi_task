@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mysivi_task/constants/app_theme.dart';
+import 'package:mysivi_task/data/repository/users_repository_impl.dart';
 import 'package:mysivi_task/presentation/bloc/home_page/home_page_bloc.dart';
 import 'package:mysivi_task/constants/app_routes.dart';
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomePageBloc(),
+      create: (context) => HomePageBloc(userRepository: UserRepositoryImpl()),
       child: MaterialApp(
         theme: AppTheme.themeData(),
         routes: AppRoutes.routes,

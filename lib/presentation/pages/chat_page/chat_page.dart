@@ -104,11 +104,12 @@ class _ChatPageState extends State<ChatPage> {
       _homePageBloc.add(
         AddUserEvent(
           user: User(
+            userID: _homePageBloc.getUsersList.length,
             name: name,
             color: GenerateRandom.randomColor(),
             isOnline: isOnline,
             onlineTime: onlineTime,
-            lastMsg: "It's the last msg",
+            lastMsg: null,
           ),
         ),
       );

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:mysivi_task/constants/app_dimentions.dart';
 import 'package:mysivi_task/constants/app_strings.dart';
 import 'package:mysivi_task/constants/app_text_styles.dart';
 import 'package:mysivi_task/presentation/models/user_model.dart';
+import 'package:mysivi_task/presentation/pages/message_page/message_page.dart';
+import 'package:mysivi_task/utils/string_helper.dart';
 
 class UsersListView extends StatefulWidget {
   final List<User> users;
@@ -18,11 +19,6 @@ class _UsersListViewState extends State<UsersListView>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
-
-  String _formatLastOnline(DateTime? time) {
-    if (time == null) return "Offline";
-    return "Last seen at ${DateFormat('hh:mm a').format(time)}";
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,22 +74,18 @@ class _UsersListViewState extends State<UsersListView>
               ),
               title: Text(user.name),
               subtitle: Text(
-                user.isOnline ? "Online" : _formatLastOnline(user.onlineTime),
+                user.isOnline
+                    ? "Online"
+                    : StringHelper.formatLastOnline(user.onlineTime),
                 style: TextStyle(
                   color: user.isOnline ? Colors.green : Colors.grey,
                   fontSize: Dimens.twelve,
                 ),
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const Scaffold(
-                      body: Center(child: Text("Chat Screen")),
-                    ),
-                  ),
-                );
-              },
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => MessagePage(user: user)),
+              ),
             ),
             if (index != widget.users.length - 1)
               const Divider(

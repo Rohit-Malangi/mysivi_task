@@ -14,4 +14,5 @@ class Dimens {
   static const thirtyTwo = 32.0;
   static const fourty = 40.0;
   static const eighty = 80.0;
+  static const twoHundredSixty = 260.0;
 }

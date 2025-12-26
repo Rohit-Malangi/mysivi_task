@@ -3,6 +3,7 @@ import 'package:mysivi_task/constants/app_dimentions.dart';
 import 'package:mysivi_task/constants/app_text_styles.dart';
 import 'package:mysivi_task/presentation/models/user_model.dart';
 import 'package:mysivi_task/constants/app_colors.dart';
+import 'package:mysivi_task/presentation/pages/message_page/message_page.dart';
 import 'package:mysivi_task/utils/gen_random.dart'; // Assuming you have this
 
 class ChatHistoryList extends StatefulWidget {
@@ -51,7 +52,7 @@ class _ChatHistoryListState extends State<ChatHistoryList>
       delegate: SliverChildBuilderDelegate((context, index) {
         final user = widget.users[index];
         final int unreadCount = index % 3 == 0
-            ? GenerateRandom.randomIntTillTen()
+            ? GenerateRandom.randomIntTillN(10)
             : 0;
         final bool hasUnread = unreadCount > 0;
 
@@ -146,6 +147,10 @@ class _ChatHistoryListState extends State<ChatHistoryList>
                     ),
                   ],
                 ],
+              ),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => MessagePage(user: user)),
               ),
             ),
             if (index != widget.users.length - 1)
