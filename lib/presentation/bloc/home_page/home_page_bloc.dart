@@ -18,6 +18,8 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   List<User> get getUsersList => _users;
   List<User> get getChatUserList => _chatUsers;
 
+  Map<int, List<ChatMessage>> _messageCache = {};
+
   HomePageBloc({required this.userRepository}) : super(HomePageInitial()) {
     on<AddUserEvent>(_addUser);
     on<GetChatMessagesListEvent>(_getChatMessagesList);
@@ -49,25 +51,30 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   ) async {
     emit(GetChatMessagesListLoadingState(isLoading: true));
     try {
-      await userRepository
-          .getChatMessgaesList(GenerateRandom.randomIntTillN(30))
-          .then((value) {
-            value.sort((a, b) => a.time.isBefore(b.time) ? -1 : 1);
-            User user = _users.firstWhereOrNull(
-              (e) => e.userID == event.userID,
-            )!;
-            user.lastMsg = value.last.text;
-            User? chatUser = _chatUsers.firstWhereOrNull(
-              (e) => e.userID == event.userID,
-            );
-            if (chatUser == null) {
-              _chatUsers.add(user);
-              sortUser();
-            } else {
-              chatUser.lastMsg = value.last.text;
-            }
-            emit(GetChatMessagesListState(list: value));
-          });
+      if (_messageCache.containsKey(event.userID)) {
+        emit(GetChatMessagesListState(list: _messageCache[event.userID]!));
+      } else {
+        await userRepository
+            .getChatMessgaesList(GenerateRandom.randomIntTillN(30))
+            .then((value) {
+              value.sort((a, b) => a.time.isBefore(b.time) ? -1 : 1);
+              User user = _users.firstWhereOrNull(
+                (e) => e.userID == event.userID,
+              )!;
+              user.lastMsg = value.last.text;
+              User? chatUser = _chatUsers.firstWhereOrNull(
+                (e) => e.userID == event.userID,
+              );
+              if (chatUser == null) {
+                _chatUsers.add(user);
+                sortUser();
+              } else {
+                chatUser.lastMsg = value.last.text;
+              }
+              _messageCache[event.userID] = value;
+              emit(GetChatMessagesListState(list: value));
+            });
+      }
     } catch (e) {
       emit(HomePageErrorState(msg: e.toString()));
     }
